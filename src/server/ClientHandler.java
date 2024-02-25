@@ -70,13 +70,19 @@ public class ClientHandler implements Runnable{
                     case "draw":
                         output = String.format("You have $%d left", ClientDB.getMoneyLeft());
                         break;
+                    case "b":
+                    case "p":
+                    case "d":
+                        BacarratEngine.resultTrack(input[0].toUpperCase());
+                        BacarratEngine.writeToCSV();
+                        break;
+
                     default:
                         output = "Wrong format";
                 }
 
                 System.out.println(output);
                 netIO.writeWithFlush(output);
-                
                 }catch(IOException e){
                     System.out.println("bye Bye");
                     break;

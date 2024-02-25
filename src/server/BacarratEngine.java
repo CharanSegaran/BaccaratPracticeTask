@@ -14,7 +14,12 @@ public class BacarratEngine {
     //Global Variables 
     private static List<Double> shuffledCards = new ArrayList<>(6);
     private int totalNumberofDecks = 0;
+    private static List<String> results = new ArrayList<>();
 
+    public static List<String> getResults() {
+        return results;
+    }
+    
     public BacarratEngine(int numOfDecks){
         this.totalNumberofDecks = numOfDecks;
 
@@ -140,6 +145,32 @@ public class BacarratEngine {
         Collections.shuffle(shuffledCards);
         return shuffledCards;
     }
+
+    public static List<String> resultTrack(String result){
+        results.add(result);
+        return results;
+    }
+     public static void writeToCSV(){
+        String filepath = "/Users/charansegaran/BaccaratPracticeTask/game_history.csv";
+        try(BufferedWriter writer = new BufferedWriter(new FileWriter(filepath))){
+            int col = 0;
+            for(String result:results){
+                if(col == 6){
+                    writer.newLine();
+                    col = 0;
+                }
+                writer.write(result);
+                if(col < 5){
+                    writer.write(",");
+                }
+                col++;
+            }
+            
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+     }
+
 }
 
 

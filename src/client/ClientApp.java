@@ -1,8 +1,6 @@
 package client;
 
-import java.io.BufferedWriter;
 import java.io.Console;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -90,47 +88,46 @@ public class ClientApp {
                 }
                 bankerSum %= 10;
                 playerSum %= 10;
+
                 if (bankerSum > playerSum && (betOnWho.split(" ")[1]).equals("B") && bankerSum == 6){
                     System.out.println("You won! and will get 1.75x your bet amount");
                     System.out.println(String.format("Banker wins with %d points", bankerSum));
                     netIO.writeWithFlush(String.format("Win|%s|%f", betHowMuch.split(" ")[1], 1.75));
-                    results.add("B");
+                    netIO.writeWithFlush("B");
                 }
                 else if (bankerSum > playerSum && (betOnWho.split(" ")[1]).equals("B") && bankerSum != 6){
                     System.out.println("You won! and will get 2.0x your bet amount");
                     System.out.println(String.format("Banker wins with %d points", bankerSum));
                     netIO.writeWithFlush(String.format("Win|%s|%f", betHowMuch.split(" ")[1], 2.0));
-                    results.add("B");
+                    netIO.writeWithFlush(("B"));
                 }
                 else if (playerSum > bankerSum && (betOnWho.split(" ")[1]).equals("P")){
                     System.out.println("You won! and will get 2.0x your bet amount");
                     System.out.println(String.format("Player wins with %d points", playerSum));
                     netIO.writeWithFlush(String.format("Win|%s|%f", betHowMuch.split(" ")[1], 2.0));
-                    results.add("P");
+                    netIO.writeWithFlush(("P"));
                 }
                 else if (playerSum == bankerSum){
                     System.out.println(String.format("It was a draw with both sides having %d points", bankerSum));
                     netIO.writeWithFlush("draw");
-                    results.add("D");
+                    netIO.writeWithFlush(("D"));
                 }
                 else if (bankerSum > playerSum && !(betOnWho.split(" ")[1]).equals("B")){
                     System.out.println("Sorry you lost");
                     System.out.println(String.format("Banker wins with %d points", bankerSum));
                     netIO.writeWithFlush("lose");
-                    results.add("B");
+                    netIO.writeWithFlush(("B"));
                 }
                 else if (bankerSum < playerSum && !(betOnWho.split(" ")[1]).equals("P")){
                     System.out.println("Sorry you lost");
                     System.out.println(String.format("Player wins with %d points", playerSum));
                     netIO.writeWithFlush("lose");
-                    results.add("P");
+                    netIO.writeWithFlush(("P"));
                 }
-
-                //write to CSV file
-                writeToCSV(results, col);
                 
                 //how much user has left
                 System.out.println(input = netIO.read());
+                netIO.read();
                 if((input.split(" ")[2]).equals("$0")) break;
             }
 
@@ -142,25 +139,6 @@ public class ClientApp {
             if(outputToServer.equals("exit")) System.out.println("bye bye!");
             else if((input.split(" ")[2]).equals("$0")) System.out.println("Sorry you ran out of money");
             
-        }
-    }
-
-    private static void writeToCSV(List<String> results, int col){
-        String filepath = "/Users/charansegaran/BaccaratPracticeTask/game_history.csv";
-        try(BufferedWriter writer = new BufferedWriter(new FileWriter(filepath))){
-            for(String result:results){
-                if (col == 6){
-                    writer.newLine();
-                    col = 0;
-                }
-                writer.write(result);
-                if (col < 5){
-                    writer.write(",");
-                }
-                col++;
-            }
-        }catch(IOException e){
-            e.printStackTrace();
         }
     }
 }
