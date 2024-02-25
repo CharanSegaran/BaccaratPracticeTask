@@ -42,10 +42,8 @@ public class ClientHandler implements Runnable{
                                 output = String.format("You have $%d left", ClientDB.getMoneyLeft());
                             }
                             else output = "insufficient amount";
-                        }catch(NumberFormatException e){
-                            System.out.println("I am here");
+                        }catch(NumberFormatException | ArrayIndexOutOfBoundsException e){
                             output = "Wrong format";
-                            System.out.println(output);
                         }
                         break;
 

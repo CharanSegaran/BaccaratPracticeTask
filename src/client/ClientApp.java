@@ -2,13 +2,10 @@ package client;
 
 import java.io.BufferedWriter;
 import java.io.Console;
-import java.io.EOFException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.Socket;
-import java.net.SocketException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 
@@ -131,9 +128,7 @@ public class ClientApp {
 
                 //write to CSV file
                 writeToCSV(results, col);
-                //col++;
-                System.out.println(results.toString());
-
+                
                 //how much user has left
                 System.out.println(input = netIO.read());
                 if((input.split(" ")[2]).equals("$0")) break;
@@ -169,28 +164,6 @@ public class ClientApp {
         }
     }
 }
-            //     while(true){
-                    
-            //         //store the results to the result ArrayList and write to csv file
-            //         results.add(winner.substring(0,1));
-            //         String filePath = "/Users/charansegaran/BaccaratPracticeTask/game_history.csv";
-            //         try(BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))){
-            //             for(String res: results){
-            //                 if(col == 6){
-            //                     writer.newLine();
-            //                     col = 0;
-            //                 }
-            //                 writer.write(res);
-            //                 if (col < 5){
-            //                     writer.write(",");
-            //                 }
-            //                 col++;
-            //             }              
-            //         }catch(IOException e){
-            //             e.printStackTrace();
-            //         }
-            //     }
-            // }
             
 
 
