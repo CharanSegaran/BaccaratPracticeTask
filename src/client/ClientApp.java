@@ -127,7 +127,10 @@ public class ClientApp {
                 
                 //how much user has left
                 System.out.println(input = netIO.read());
+                //just to read input from server after client gives "B" or "P" or "D" to server, and do nth so code..
+                //..can continue
                 netIO.read();
+                //if user has ran out of money, break the loop
                 if((input.split(" ")[2]).equals("$0")) break;
             }
 
